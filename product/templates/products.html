@@ -1,0 +1,62 @@
+
+{% extends 'base.html' %}
+<html>
+
+<head>
+    {% block title %}Products{% endblock %}
+</head>
+<body>
+    {% block content %}
+    <h1>Product List</h1>
+    <hr>
+    {% if products %}
+    <table class="table table-dark table-striped" style="border-collapse: collapse; width: 60%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Is Deleted</th>
+                <th>Created By</th>
+                <th>Date Created</th>
+                <th>Date Updated</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for prod in products %}
+            <tr>
+                <td>{{prod.id}}</td>
+                <td>{{prod.name}}</td>
+                <td>{{prod.description}}</td>
+                <td>{{prod.price}}</td>
+                <td>{{prod.qty}}</td>
+                <td>{{prod.is_deleted}}</td>
+                <td>{{prod.created_by}}</td>
+                <td>{{prod.created_at}}</td>
+                <td>{{prod.updated_at}}</td>
+                <td style="border: 1px solid black; padding: 8px;">
+                    <a href="{% url 'update_prod' prod.id %}" class="btn btn-secondary">View/Edit</a>
+
+                    <form action="{% url 'soft_delete_prod' prod.id %}"  method="post">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+
+                    </form>
+                </td>
+
+            </tr>
+            {% endfor %}
+        <tbody>
+
+    </table>
+
+    {% else %}
+    No Record Found
+    {% endif %}
+{% endblock %}
+</body>
+
+</html>
